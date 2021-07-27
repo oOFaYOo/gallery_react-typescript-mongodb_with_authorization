@@ -1,7 +1,7 @@
 import React from 'react';
 import {PureComponent, Component} from "react";
 import './style.css';
-import Api from "../../../Api";
+import Api from "../../../../../Api.js";
 
 interface IUploadPanelProps {
     closeUpload: () => void;

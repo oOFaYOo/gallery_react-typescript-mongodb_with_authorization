@@ -2,12 +2,16 @@ import React from "react";
 import {PureComponent, Component} from "react";
 import "./style.css";
 
-class RegistrationPanel extends PureComponent{
+interface IRegistrationPanelProps {
+    switcher: () => void
+}
+
+class RegistrationPanel extends PureComponent<IRegistrationPanelProps>{
     render(): React.ReactNode {
         return(
             <div className="RegAuth">
                 <div className="containerRegAuth">
-                    <p className="reg">REGISTRATION</p>
+                    <p className="reg_main">REGISTRATION</p>
                     <p>set and remember your login and password</p>
                     <form>
                         <div>
@@ -16,7 +20,7 @@ class RegistrationPanel extends PureComponent{
                         </div>
                         <button type="submit">OK</button>
                     </form>
-                    <p className="login">LOG IN</p>
+                    <p className="login" onClick={this.props.switcher}>LOG IN</p>
                 </div>
             </div>
         );

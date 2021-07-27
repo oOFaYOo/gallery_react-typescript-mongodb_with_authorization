@@ -37,5 +37,9 @@ export default class Api {
         }
     }
 
+    async signIn (login, password) {
+            
+    }
+
 }
 

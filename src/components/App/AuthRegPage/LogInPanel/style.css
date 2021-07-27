@@ -25,14 +25,13 @@ p{
     height: 50%;
     min-height: 230px;
     min-width: 445px;
-    /*background-color: #3e3e3e;*/
     background: linear-gradient(to left, #3e3e3e 98%, #ff7f50 98%);
     font-family: sans-serif;
     max-width: 700px;
     max-height: 625px;
 }
 
-.login, .reg{
+.login_main, .reg{
     width: 100%;
     position: relative;
     text-align: center;
@@ -41,7 +40,7 @@ p{
     height: 10%;
     padding-top: 1%;
 }
-.login {
+.login_main {
     color: rgb(191, 191, 191);
 }
 
@@ -69,7 +68,6 @@ form div{
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    /*background-color: yellow;*/
     height: 100%;
     position: relative;
     width: 55%;
