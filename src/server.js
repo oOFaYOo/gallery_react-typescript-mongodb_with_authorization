@@ -1,12 +1,16 @@
+const {DbClientGallery} = require("./dbClientGallery.js");
 const http = require("http");
 const fs = require('fs');
 const path = require('path');
 const connect = require("connect");
+const express = require("express");
 const errorhandler = require('errorhandler');
-const app = connect();
+const app = express();
 const mime = require('mime-types');
+const dbClient = new DbClientGallery();
 
-let server = new http.Server(app);
+dbClient.start();
+const server = new http.Server(app);
 
 // server.listen(process.env.PORT ? process.env.PORT : 80);
 server.listen(80, "127.0.0.1");
@@ -51,6 +55,38 @@ app.use(function (req, res, next) {
 
 })
 
+app.put("/signin", function (req, res) {
+    req.on('data', async data => {
+        let body = JSON.parse(data);
+        try {
+            await dbClient.checkUser(body.login, body.password);
+            res.statusCode = 200;
+            res.end();
+        } catch (e) {
+            console.error(e);
+            res.statusCode = 500;
+            res.end(e.message);
+        }
+    });
+})
+
+app.put("/signup", function (req, res) {
+    req.on('data', async data => {
+        console.log(data);
+        let body = JSON.parse(data);
+        try {
+            await dbClient.addUser(body.login, body.password);
+            res.statusCode = 200;
+            res.end();
+        } catch (e) {
+            console.error(e);
+            res.statusCode = 500;
+            res.end(e.message);
+        }
+    });
+})
+
+
 app.use(function (req, res, next) {
     if (req.method === "DELETE") {
         fs.unlink("./" + req.url, (err) => {
@@ -61,8 +97,8 @@ app.use(function (req, res, next) {
                 console.info("Файл удален");
             }
         })
-    } else if(req.method === "PUT"){
-        let stream = fs.createWriteStream("./images"+req.url);
+    } else if(req.method === "PUT" && req.url.indexOf("images") > -1 ){
+        let stream = fs.createWriteStream("./"+req.url);
         stream.on("error", () => {
             errH(res, next);
         });
@@ -73,6 +109,8 @@ app.use(function (req, res, next) {
         errH(res, next);
     }
 })
+
+
 
 app.use(errorhandler());
 

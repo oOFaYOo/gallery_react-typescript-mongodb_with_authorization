@@ -46,7 +46,7 @@
     padding-top: 25px;
 }
 
-label{
+.add_file label{
     width: 230px;
     height: 230px;
     position: relative;

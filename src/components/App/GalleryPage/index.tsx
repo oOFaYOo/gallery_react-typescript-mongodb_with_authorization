@@ -10,7 +10,7 @@ interface IGalleryPageState {
 }
 
 interface IProps {
-
+    api: Api;
 }
 
 class GalleryPage extends PureComponent<IProps, IGalleryPageState>{
@@ -23,7 +23,7 @@ class GalleryPage extends PureComponent<IProps, IGalleryPageState>{
         return (
             <div className="justdiv">
                 <SidePanel openUpload={this.openUploadHandler} />
-                <CentralArea closeUpload={this.closeUploadHandler} isOpenUpload={this.state.isOpenUpload} api={new Api()}/>
+                <CentralArea closeUpload={this.closeUploadHandler} isOpenUpload={this.state.isOpenUpload} api={this.props.api}/>
             </div>
         );
     }

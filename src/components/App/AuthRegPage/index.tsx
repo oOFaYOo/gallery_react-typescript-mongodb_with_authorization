@@ -2,36 +2,47 @@ import React from "react";
 import {PureComponent, Component} from "react";
 import LogInPanel from "./LogInPanel";
 import RegistrationPanel from "./RegistrationPanel";
+import Api from "../../../Api";
 
 interface IAuthRegPageState {
-    isOpenAuth: boolean;
-    isOpenReg: boolean;
+    signIn: boolean;
 }
 
 interface IAuthRegPageProps {
-
+    signIn: (login:string, password:string) => Promise<void>;
+    api: Api;
 }
 
 class AuthRegPage extends PureComponent<IAuthRegPageProps, IAuthRegPageState>{
 
     state = {
-        isOpenAuth: true,
-        isOpenReg: false
+        signIn: true
     }
 
     render(): React.ReactNode {
         return (
             <div className="justdiv">
-                {this.state.isOpenAuth?<LogInPanel switcher={this.switchAuthReg} />:null}
-                {this.state.isOpenReg?<RegistrationPanel switcher={this.switchAuthReg} />:null}
+                {this.state.signIn
+                    ? <LogInPanel signIn={this.props.signIn} switcher={this.switchAuthReg} />
+                    : <RegistrationPanel signUp={this.signUp} switcher={this.switchAuthReg} />}
             </div>
         );
     }
 
+    private signUp = async (login:string, password:string):Promise<void> => {
+        try {
+            await this.props.api.signUp(login, password);
+            this.switchAuthReg();
+        } catch (e) {
+            console.error(e)
+            alert(`${e}`);
+        }
+
+    }
+
     private switchAuthReg = () => {
         this.setState({
-                isOpenAuth: !this.state.isOpenAuth,
-                isOpenReg: !this.state.isOpenReg
+                signIn: !this.state.signIn,
             }
         )
     }

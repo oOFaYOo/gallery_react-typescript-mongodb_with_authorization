@@ -15,7 +15,7 @@ export default class Api {
 
     async addImage (arr) {
         for(let image of arr) {
-            let response = await fetch(image.name, {
+            let response = await fetch("images" + image.name, {
                 method: "PUT",
                 headers: {
                     "Content-Type": image.type,
@@ -32,13 +32,30 @@ export default class Api {
         let response = await fetch(picSRC, {
             method: "DELETE",
         });
+
         if(response.status !== 200){
             throw new Error(`Image cannot be deleted. Error code: ${response.status}`);
         }
     }
 
     async signIn (login, password) {
-            
+        let response = await fetch("/signin", {
+            method: "PUT",
+            body: JSON.stringify({login: login, password: password})
+        });
+
+        if (response.status !== 200)
+            throw new Error(`Can't sign in user '${login}': StatusCode='${response.status}' ErrorMessage='${await response.text()}'`);
+    }
+
+    async signUp (login, password) {
+        let response = await fetch("/signup", {
+            method:"PUT",
+            body: JSON.stringify({login: login, password: password})
+        });
+
+        if (response.status !== 200)
+            throw new Error(await response.text());
     }
 
 }
