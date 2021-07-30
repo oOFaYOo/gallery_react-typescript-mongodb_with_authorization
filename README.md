@@ -8,7 +8,7 @@ Tested only on Google Chrome.
 Second experience of using React and TypeScript.
 First experience of using MongoDB.
 
-![weather_demo](https://github.com/oOFaYOo/gallery_react_typescript/blob/master/public/demo.gif)
+![gallery_demo](https://github.com/oOFaYOo/gallery_react-typescript-mongodb_with_authorization/blob/master/public/demo.gif)
 
 
 
